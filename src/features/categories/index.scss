@@ -1,0 +1,12 @@
+.categorySection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    .categoryCard{
+        padding: 20px;
+        border: 1px solid black;
+        width: 300px;
+    }
+}
