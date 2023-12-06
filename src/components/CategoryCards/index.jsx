@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-const CategoryCards = ({ id, name, description, category, handleRemoveItem, handleUpdate, addBasket }) => {
+const CategoryCards = ({ id, name, description, category, handleRemoveItem, handleUpdate, addBasket,addWishlist }) => {
 
     const dispatch = useDispatch()
 
@@ -16,6 +16,7 @@ const CategoryCards = ({ id, name, description, category, handleRemoveItem, hand
         <button onClick={() => handleRemoveItem(id)}>Delete</button>
         <button onClick={() => handleUpdate(id, name, description)}>Edit</button>
         <button onClick={() => dispatch(addBasket(category))}>addBasket</button>
+        <button onClick={()=> dispatch(addWishlist(category))}> addWishlist</button>
       </div>
     </>
   );

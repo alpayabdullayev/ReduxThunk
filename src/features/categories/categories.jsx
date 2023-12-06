@@ -5,7 +5,7 @@ import {
   DeleteCategory,
   FetchCategories,
   UpdateCategory,
-  addBasket,
+  addBasket,addWishlist
 } from "./categoriesSlice";
 import "./index.scss";
 import CategoryCards from "../../components/CategoryCards";
@@ -14,6 +14,7 @@ import BasketCards from "../../components/BasketCards";
 const Categories = () => {
   const categories = useSelector((state) => state.category.entity);
   const basket = useSelector((state) => state.category.basket);
+  const wishlist = useSelector((state) => state.category.wishlist);
   const loading = useSelector((state) => state.category.loading);
   const dispatch = useDispatch();
 
@@ -28,8 +29,16 @@ const Categories = () => {
     dispatch(FetchCategories());
   }, [dispatch]);
 
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+  
+
   function handleAddCategory(e) {
     e.preventDefault();
+    if (newCategory.name.trim() === "" || newCategory.description.trim() === "") {
+      return;
+    }
     dispatch(AddCategory(newCategory));
     setNewCategory({ name: "", description: "" });
   }
@@ -56,6 +65,10 @@ const Categories = () => {
     setEditCategory({ id: null, name: "", description: "" });
   };
 
+
+
+
+
   return (
     <>
       {loading ? (
@@ -70,6 +83,7 @@ const Categories = () => {
               handleRemoveItem={handleRemoveItem}
               handleUpdate={handleUpdate}
               addBasket={addBasket}
+              addWishlist={addWishlist}
             />
           ))}
         </div>
@@ -120,6 +134,13 @@ const Categories = () => {
 
       {basket.map((item) => (
         <BasketCards key={item.id} item={item} {...item} />
+      ))}
+
+      {wishlist.map((item)=>(
+        <div>
+          <h1>{item.id}</h1>
+          <h1>{item.name}</h1>
+        </div>
       ))}
     </>
   );
